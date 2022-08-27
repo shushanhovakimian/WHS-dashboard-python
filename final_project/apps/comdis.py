@@ -36,10 +36,10 @@ margins = {
 
 #Data for line chart communicable diseases
 
-hiv = pd.read_csv('newHivInfections.csv')
-tuber = pd.read_csv('incedenceOfTuberculosis.csv')
-malaria = pd.read_csv('incedenceOfMalaria.csv')
-regions=pd.read_csv('countryInfo.csv')
+hiv = pd.read_csv('data/newHivInfections.csv')
+tuber = pd.read_csv('data/incedenceOfTuberculosis.csv')
+malaria = pd.read_csv('data/incedenceOfMalaria.csv')
+regions=pd.read_csv('data/countryInfo.csv')
 hiv = hiv.drop('Indicator', axis = 1)
 hiv.rename(columns={'Location':'country','Period':'year', 'Dim1':'Gender', 'First Tooltip':'new_hiv_inf', }, inplace=True)
 tuber = tuber.drop('Indicator', axis = 1)

@@ -35,7 +35,7 @@ colors = {
 # }
 
 # Data for barplot + linechart
-cancer = pd.read_csv('30-70cancerChdEtc.csv')
+cancer = pd.read_csv('data/30-70cancerChdEtc.csv')
 cancer.rename(columns={'First Tooltip': 'prob_dying30_70', 'Dim1': 'gender'},
               inplace=True)  # Probability of dying between the age of 30 and exact age of 70 from any of the cardiovascular disease, cancer, diabetes, or chronic respiratory disease.
 cancer = cancer.drop('Indicator', axis=1)

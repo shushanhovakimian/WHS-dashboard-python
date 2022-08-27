@@ -14,7 +14,7 @@ from app import app
 import math
 
 #Data for map
-df_lifeExpectancyAtBirth = pd.read_csv('lifeExpectancyAtBirth.csv')
+df_lifeExpectancyAtBirth = pd.read_csv('data/lifeExpectancyAtBirth.csv')
 df_lifeExpectancyAtBirth = df_lifeExpectancyAtBirth[df_lifeExpectancyAtBirth['Period'] > 1920]
 df_world = df_lifeExpectancyAtBirth[df_lifeExpectancyAtBirth['Dim1'] == 'Both sexes'].sort_values(by=['Period']).reset_index()
 df_world.rename(columns={'First Tooltip': 'Life Expectancy'}, inplace=True)
@@ -35,7 +35,7 @@ fig1.update_layout(
                 )
 
 #Data for racing charts
-df = pd.read_csv("medicalDoctors.csv")
+df = pd.read_csv("data/medicalDoctors.csv")
 df.rename(columns = {'Location' : 'country',
                      "Period": "year",
                      "First Tooltip": "Medical doctors (per 10,000)"
@@ -101,18 +101,18 @@ fig2 = go.Figure(
     ]
 )
 #Data for bubble chart
-pop = pd.read_csv('population.csv')
-water = pd.read_csv('basicDrinkingWaterServices.csv')
+pop = pd.read_csv('data/population.csv')
+water = pd.read_csv('data/basicDrinkingWaterServices.csv')
 water = water.drop('Indicator', axis = 1)
 pop = pop[pop['year'] >= 2000]
 pop = pop[pop['year'] <= 2017]
 water.rename(columns={'Period':'year', 'First Tooltip':'Drinking', 'Location':'country'}, inplace=True)
 unified = pd.merge(pop, water, on = ['country', 'year'])
-poison = pd.read_csv('mortalityRatePoisoning.csv')
+poison = pd.read_csv('data/mortalityRatePoisoning.csv')
 poison = poison.drop('Indicator', axis = 1)
 poison.rename(columns={'Dim1':'Gender', 'First Tooltip':'poison_mort', 'Location':'country','Period':'year'}, inplace=True)
 df = pd.merge(unified, poison, on = ['country', 'year'])
-info = pd.read_csv('countryInfo.csv')
+info = pd.read_csv('data/countryInfo.csv')
 info = info.drop(['flag', 'country_alt', 'alpha2', 'numeric'], axis=1)
 df = pd.merge(df, info, on = 'country')
 df_2016 = df[df['year']==2016]
@@ -183,24 +183,24 @@ fig.update_layout(
 
 
 #Data for sunburst
-df_lifeExpectancyAtBirth = pd.read_csv('lifeExpectancyAtBirth.csv')
+df_lifeExpectancyAtBirth = pd.read_csv('data/lifeExpectancyAtBirth.csv')
 df_lifeExpectancyAtBirth = df_lifeExpectancyAtBirth[df_lifeExpectancyAtBirth['Period'] > 1920]
 sunburst = df_lifeExpectancyAtBirth.drop(['Indicator', 'Dim1'], axis = 1)
 sunburst.rename(columns={'First Tooltip': 'Life Expectancy', 'Location':'country', 'Period':'year'}, inplace=True)
-info = pd.read_csv('countryInfo.csv')
+info = pd.read_csv('data/countryInfo.csv')
 info = info.drop(['flag', 'country_alt', 'alpha2', 'numeric'], axis=1)
 sunburst = pd.merge(sunburst, info, on = 'country')
-pop = pd.read_csv('population.csv')
+pop = pd.read_csv('data/population.csv')
 pop = pop[pop['year']>=2000]
 sunburst = pd.merge(sunburst, pop, on = ['country', 'year'])
-hale = pd.read_csv('HALElifeExpectancyAtBirth.csv')
+hale = pd.read_csv('data/HALElifeExpectancyAtBirth.csv')
 hale = hale.drop(['Indicator', 'Dim1'], axis =1)
 hale.rename(columns={'First Tooltip':'HALE', 'Location':'country', 'Period':'year'}, inplace=True)
 hale = hale.groupby(['country', 'year']).mean().reset_index(['country', 'year'])
 sunburst = sunburst.groupby(['country', 'year']).mean().reset_index(['country', 'year'])
 sunburst = pd.merge(sunburst, hale, on = ['country','year'])
 sunburst = pd.merge(sunburst, info, on = 'country')
-poisoning = pd.read_csv('mortalityRatePoisoning.csv')
+poisoning = pd.read_csv('data/mortalityRatePoisoning.csv')
 poisoning.rename(columns={'Period':'year', 'First Tooltip':'Poisoning_MR', 'Location':'country'}, inplace=True)
 poisoning = poisoning.drop(['Indicator', 'Dim1'], axis = 1)
 poisoning=poisoning.groupby(['country','year']).mean().reset_index(['country','year'])
